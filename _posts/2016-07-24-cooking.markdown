@@ -1,0 +1,7 @@
+---
+layout: post
+title: "Cooking"
+tags: cooking
+---
+
+<img src="/assets/IMG_3079.JPG" />
