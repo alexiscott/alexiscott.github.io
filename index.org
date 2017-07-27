@@ -8,9 +8,9 @@
 Hi, I'm Alex Scott, a british software engineer, based in Spain, and working remotely for [[https://civicactions.com/team/alex-scott/][Civic Actions]].
 
 * Blogging with emacs org mode.
-The object of this post is to demonstrate a simple approach to blogging using Emac's org mode. For those of you not familiar with Emacs what convinced me of it's benifits was it's [[http://sachachua.com/blog/2008/01/outlining-your-notes-with-org/][outlining capacities]]. Little did I know that it would also end up changing the way that I think about programming.
+The object of this post is to demonstrate a simple approach to blogging using Emac's org mode. For those of you not familiar with Emacs what convinced me of it's benefits was it's [[http://sachachua.com/blog/2008/01/outlining-your-notes-with-org/][outlining capacities]]. Little did I know that it would also end up changing the way that I think about programming.
 
-This page seemed to offer the simplest approach to getting started with Org mode web publishing, [[https://jgkamat.github.io/blog/website1.html#sec-3][Creating A Blog in Org Mode]]. Here is the [[https://raw.githubusercontent.com/jgkamat/jgkamat.github.io/sources/src/blog/website1.org][org file from which the page is created]], so you can see what we are working with.
+My approach was based on [[https://jgkamat.github.io/blog/website1.html#sec-3][Creating A Blog in Org Mode]]. Here is the [[https://raw.githubusercontent.com/jgkamat/jgkamat.github.io/sources/src/blog/website1.org][org file from which that page is created]], so you can see what we are working with.
 
 The export mechanism is powered via the easy to use [[https://github.com/marsmining/ox-twbs][ox-twbs]]. You can see a demo showing here: [[http://clubctrl.com/org/prog/ox-twbs.html#sec-1][Example]], which is parsed from this, [[https://raw.githubusercontent.com/marsmining/ox-twbs/master/example/eg0.org][org file]]. You just publish from within org mode with it's ox twbs's own publish command.
 
