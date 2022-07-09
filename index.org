@@ -1,11 +1,11 @@
 #+TITLE: alexscott.net
 #+AUTHOR: Alex Scott
 #+EMAIL: alex@alexscott.net
-#+DATE: <2017-07-27 Thu>
+#+DATE: <2022-07-09 Sat>
 #+OPTIONS: num:nil
 
 * Welcome to my blog
-Hi, I'm Alex Scott, a british software engineer, based in Spain, and working remotely for [[https://civicactions.com/team/alex-scott/][Civic Actions]].
+Hi, I'm Alex Scott, a british software engineer, based in Spain, and working remotely for [[https://www.annertech.com/][Annertech]].
 
 * Blogging with emacs org mode.
 The object of this post is to demonstrate a simple approach to blogging using Emac's org mode. For those of you not familiar with Emacs what convinced me of it's benefits was it's [[http://sachachua.com/blog/2008/01/outlining-your-notes-with-org/][outlining capacities]]. Little did I know that it would also end up changing the way that I think about programming.
