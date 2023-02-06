@@ -4,6 +4,7 @@
     <meta charset="utf-8">
 
     <meta name="author" content="Alex Scott">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
     <style>
       @font-face {
@@ -11,26 +12,24 @@
           src: url("CourierPrime-Regular.ttf");
       }
 
+      html {
+          font-size: 100%; /* 100% = 16px */
+      }
+
       body {
           background: #000;
           background-size: cover;
           color: white;
           font-family: 'CourierPrime-Regular', 'Arial', sans-serif;
-          font-size: 3em;
       }
 
 
-      @media screen and (min-width: 600px) {
+      @media  (min-width: 600px) {
           body {
               font-size: 2em;
           }
       }
 
-      @media screen and (min-width: 810px) {
-          body {
-              font-size: 1em;
-          }
-      }
 
       .email-link {
           color: white;
