@@ -1,253 +1,55 @@
-<!doctype html>
-<html lang="en">
-<head>
-<title>alexscott.net</title>
-<!-- 2022-07-09 Sat 12:49 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Org-mode">
-<meta name="author" content="Alex Scott">
+<html>
+  <head>
+    <title>alexscott.net</title>
+    <meta charset="utf-8">
 
-<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<style>
-/* org mode styles on top of twbs */
+    <meta name="author" content="Alex Scott">
 
-html {
-    position: relative;
-    min-height: 100%;
-}
+    <style>
+      @font-face {
+          font-family:"CourierPrime-Regular";
+          src: url("CourierPrime-Regular.ttf");
+      }
 
-body {
-    font-size: 18px;
-    margin-bottom: 105px;
-}
+      body{
+          background: #000;
+          background-size: cover;
+          color: white;
+          font-family: 'CourierPrime-Regular', 'Arial', sans-serif;
+      }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 101px;
-    background-color: #f5f5f5;
-}
+      .email-link {
+          color: white;
+      }
 
-footer > div {
-    padding: 10px;
-}
+      .container {
+          width: 360px;
+      }
+    </style>
+  </head>
+  <body>
 
-footer p {
-    margin: 0 0 5px;
-    text-align: center;
-    font-size: 16px;
-}
+    <div class="container">
+      <div class="typed-out" id="demo">
+            <noscript>Coming from a creative background, and education, Alex has been working in web design for 22 years now. He has strong technical and analytical skills. His rare ability to combine technical mastery with artistic sensitivity, and his acute attention to detail, makes him an indispensable asset in any digital team.</noscript>
 
-#table-of-contents {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+      </div>
+      <br />
+      <a href="mailto:alex@alexscott.net" class="email-link">Email alex</a>
+    </div>
+    <script>
+      var i = 0;
+      var txt = 'Coming from a creative background, and education, Alex has been working in web design for 22 years now. He has strong technical and analytical skills. His rare ability to combine technical mastery with artistic sensitivity, and his acute attention to detail, makes him an indispensable asset in any digital team.'; /* The text */
+      var speed = 50; /* The speed/duration of the effect in milliseconds */
 
-blockquote p {
-    font-size: 18px;
-}
-
-pre {
-    font-size: 16px;
-}
-
-.footpara {
-    display: inline-block;
-}
-
-figcaption {
-  font-size: 16px;
-  color: #666;
-  font-style: italic;
-  padding-bottom: 15px;
-}
-
-/* from twbs docs */
-
-.bs-docs-sidebar.affix {
-    position: static;
-}
-@media (min-width: 768px) {
-    .bs-docs-sidebar {
-        padding-left: 20px;
-    }
-}
-
-/* All levels of nav */
-.bs-docs-sidebar .nav > li > a {
-    display: block;
-    padding: 4px 20px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #999;
-}
-.bs-docs-sidebar .nav > li > a:hover,
-.bs-docs-sidebar .nav > li > a:focus {
-    padding-left: 19px;
-    color: #A1283B;
-    text-decoration: none;
-    background-color: transparent;
-    border-left: 1px solid #A1283B;
-}
-.bs-docs-sidebar .nav > .active > a,
-.bs-docs-sidebar .nav > .active:hover > a,
-.bs-docs-sidebar .nav > .active:focus > a {
-    padding-left: 18px;
-    font-weight: bold;
-    color: #A1283B;
-    background-color: transparent;
-    border-left: 2px solid #A1283B;
-}
-
-/* Nav: second level (shown on .active) */
-.bs-docs-sidebar .nav .nav {
-    display: none; /* Hide by default, but at >768px, show it */
-    padding-bottom: 10px;
-}
-.bs-docs-sidebar .nav .nav > li > a {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 30px;
-    font-size: 12px;
-    font-weight: normal;
-}
-.bs-docs-sidebar .nav .nav > li > a:hover,
-.bs-docs-sidebar .nav .nav > li > a:focus {
-    padding-left: 29px;
-}
-.bs-docs-sidebar .nav .nav > .active > a,
-.bs-docs-sidebar .nav .nav > .active:hover > a,
-.bs-docs-sidebar .nav .nav > .active:focus > a {
-    padding-left: 28px;
-    font-weight: 500;
-}
-
-/* Nav: third level (shown on .active) */
-.bs-docs-sidebar .nav .nav .nav {
-    padding-bottom: 10px;
-}
-.bs-docs-sidebar .nav .nav .nav > li > a {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 40px;
-    font-size: 12px;
-    font-weight: normal;
-}
-.bs-docs-sidebar .nav .nav .nav > li > a:hover,
-.bs-docs-sidebar .nav .nav .nav > li > a:focus {
-    padding-left: 39px;
-}
-.bs-docs-sidebar .nav .nav .nav > .active > a,
-.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
-.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
-    padding-left: 38px;
-    font-weight: 500;
-}
-
-/* Show and affix the side nav when space allows it */
-@media (min-width: 992px) {
-    .bs-docs-sidebar .nav > .active > ul {
-        display: block;
-    }
-    /* Widen the fixed sidebar */
-    .bs-docs-sidebar.affix,
-    .bs-docs-sidebar.affix-bottom {
-        width: 213px;
-    }
-    .bs-docs-sidebar.affix {
-        position: fixed; /* Undo the static from mobile first approach */
-        top: 20px;
-    }
-    .bs-docs-sidebar.affix-bottom {
-        position: absolute; /* Undo the static from mobile first approach */
-    }
-    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
-        margin-top: 0;
-        margin-bottom: 0
-    }
-}
-@media (min-width: 1200px) {
-    /* Widen the fixed sidebar again */
-    .bs-docs-sidebar.affix-bottom,
-    .bs-docs-sidebar.affix {
-        width: 263px;
-    }
-}
-</style>
-<script>
-$(function() {
-    'use strict';
-
-    $('.bs-docs-sidebar li').first().addClass('active');
-
-    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
-
-    $('.bs-docs-sidebar').affix();
-});
-</script>
-</head>
-<body>
-<div id="content" class="container">
-<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
-<div id="text-table-of-contents" class="bs-docs-sidebar">
-<ul class="nav">
-<li><a href="#sec-">Welcome to my blog</a></li>
-<li><a href="#sec-">Blogging with emacs org mode.</a></li>
-</ul>
-</div>
-</nav>
-</div><div class="col-md-9 col-md-pull-3"><h1 class="title">alexscott.net</h1>
-
-<div id="outline-container-sec-" class="outline-2">
-<h2 id="sec-">Welcome to my blog</h2>
-<div class="outline-text-2" id="text-">
-<p>
-Hi, I'm Alex Scott, a british software engineer, based in Spain, and working remotely for <a href="https://www.annertech.com/">Annertech</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-" class="outline-2">
-<h2 id="sec-">Blogging with emacs org mode.</h2>
-<div class="outline-text-2" id="text-">
-<p>
-The object of this post is to demonstrate a simple approach to blogging using Emac's org mode. For those of you not familiar with Emacs what convinced me of it's benefits was it's <a href="http://sachachua.com/blog/2008/01/outlining-your-notes-with-org/">outlining capacities</a>. Little did I know that it would also end up changing the way that I think about programming.
-</p>
-
-<p>
-My approach was based on <a href="https://jgkamat.github.io/blog/website1.html#sec-3">Creating A Blog in Org Mode</a>. Here is the <a href="https://raw.githubusercontent.com/jgkamat/jgkamat.github.io/sources/src/blog/website1.org">org file from which that page is created</a>, so you can see what we are working with.
-</p>
-
-<p>
-The export mechanism is powered via the easy to use <a href="https://github.com/marsmining/ox-twbs">ox-twbs</a>. You can see a demo showing here: <a href="http://clubctrl.com/org/prog/ox-twbs.html#sec-1">Example</a>, which is parsed from this, <a href="https://raw.githubusercontent.com/marsmining/ox-twbs/master/example/eg0.org">org file</a>. You just publish from within org mode with it's ox twbs's own publish command.
-</p>
-
-<p>
-Hosting was made easy, and free, with <a href="https://pages.github.com/">GitHub Pages</a>.
-</p>
-
-<p>
-Here is a picture of  my org file, open in Emacs.
-</p>
-
-
-<figure>
-<p><img src="files/emacs-screenshot.png" class="img-responsive" alt="emacs-screenshot.png">
-</p>
-</figure>
-</div>
-</div>
-</div></div></div>
-<footer id="postamble" class="">
-<div><p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2022-07-09 Sat&gt;</span></span></p>
-<p class="author">Author: Alex Scott</p>
-<p class="date">Created: 2022-07-09 Sat 12:49</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="http://orgmode.org">Org-mode</a> 9.5.2)</p>
-</div>
-</footer>
-</body>
+      function typeWriter() {
+          if (i < txt.length) {
+              document.getElementById("demo").innerHTML += txt.charAt(i);
+              i++;
+              setTimeout(typeWriter, speed);
+          }
+      };
+      typeWriter();
+    </script>
+  </body>
 </html>
