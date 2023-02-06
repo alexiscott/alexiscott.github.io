@@ -11,17 +11,25 @@
           src: url("CourierPrime-Regular.ttf");
       }
 
-      body{
+      body {
           background: #000;
           background-size: cover;
           color: white;
           font-family: 'CourierPrime-Regular', 'Arial', sans-serif;
-          font-size: 1em;
+          font-size: 3em;
       }
 
 
+      @media screen and (min-width: 600px) {
+          body {
+              font-size: 2em;
+          }
+      }
+
       @media screen and (min-width: 810px) {
-          font-size: 1em;
+          body {
+              font-size: 1em;
+          }
       }
 
       .email-link {
