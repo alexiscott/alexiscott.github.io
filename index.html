@@ -16,23 +16,27 @@
           font-size: 100%; /* 100% = 16px */
       }
 
+      img {
+          width: 100%;
+          max-width: 1200px;
+      }
+
       body {
           background: #000;
-          background-size: cover;
           color: white;
           font-family: 'CourierPrime-Regular', 'Arial', sans-serif;
+          font-size: 1em;
+      }
+
+      .intro {
+          max-width: 520px;
       }
 
 
-      @media  (min-width: 600px) {
-          body {
-              font-size: 2em;
-          }
-      }
 
 
       .email-link {
-          color: white;
+          color: red;
       }
 
     </style>
@@ -40,26 +44,27 @@
   <body>
 
     <div class="container">
-      <div class="typed-out" id="demo">
-            <noscript>Coming from a creative background, and education, Alex has been working in web design for 22 years now. He has strong technical and analytical skills. His rare ability to combine technical mastery with artistic sensitivity, and his acute attention to detail, makes him an indispensable asset in any digital team.</noscript>
+
+        <img src="whole.svg" />
+
+        <p/>
+
+        <div class="intro">
+        ABOUT
+        <p>Coming from a creative background and education, I have been working
+        in web design for 23 years now; this has given me time to develop both
+        strong technical and analytical skills. Combining these qualities, and
+        along with my communication skills, I consider myself a valuble part
+        of any web design project.</p>
+
+        <p>I am also available for freelancing. Please don't
+        hesitate to <a href="mailto:alex@alexscott.net"
+        class="email-link">Contact me</a>.</p>
 
       </div>
       <br />
-      <a href="mailto:alex@alexscott.net" class="email-link">Email alex</a>
-    </div>
-    <script>
-      var i = 0;
-      var txt = 'Coming from a creative background, and education, Alex has been working in web design for 22 years now. He has strong technical and analytical skills. His rare ability to combine technical mastery with artistic sensitivity, and his acute attention to detail, makes him an indispensable asset in any digital team.'; /* The text */
-      var speed = 50; /* The speed/duration of the effect in milliseconds */
 
-      function typeWriter() {
-          if (i < txt.length) {
-              document.getElementById("demo").innerHTML += txt.charAt(i);
-              i++;
-              setTimeout(typeWriter, speed);
-          }
-      };
-      typeWriter();
-    </script>
+    </div>
+
   </body>
 </html>
