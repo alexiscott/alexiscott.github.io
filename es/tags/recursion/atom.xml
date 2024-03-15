@@ -12,13 +12,13 @@
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2024-03-08T00:00:00+00:00</updated>
     <id>http://alexscott.net/es/tags/recursion/atom.xml</id><entry xml:lang="es">
-        <title>Los torres de Hanoi</title>
+        <title>La Torre de Hanoi</title>
         <published>2024-03-08T00:00:00+00:00</published>
         <updated>2024-03-08T00:00:00+00:00</updated>
         <author>
             <name>Alex Scott</name>
         </author>
-        <link rel="alternate" href="http://alexscott.net/es/blog/towers-of-hanoi/" type="text/html"/>
-        <id>http://alexscott.net/es/blog/towers-of-hanoi/</id>
+        <link rel="alternate" href="http://alexscott.net/es/blog/tower-of-hanoi/" type="text/html"/>
+        <id>http://alexscott.net/es/blog/tower-of-hanoi/</id>
         </entry>
 </feed>
