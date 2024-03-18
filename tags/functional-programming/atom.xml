@@ -20,5 +20,6 @@
         </author>
         <link rel="alternate" href="http://alexscott.net/blog/tower-of-hanoi/" type="text/html"/>
         <id>http://alexscott.net/blog/tower-of-hanoi/</id>
+        <summary type="html">The Tower of Hanoi is the name of a puzzle invented by the french mathematician Édouard Lucas in 1883. We will solve it in code and using recursion.</summary>
         </entry>
 </feed>

@@ -20,5 +20,6 @@
         </author>
         <link rel="alternate" href="http://alexscott.net/es/blog/tower-of-hanoi/" type="text/html"/>
         <id>http://alexscott.net/es/blog/tower-of-hanoi/</id>
+        <summary type="html">Las Torres de Hanói es un rompecabezas inventado en 1883 por el matemático francés Édouard Lucas en lo cual existe tres torres y queremos mudar *x* discos de uno a otro.</summary>
         </entry>
 </feed>
