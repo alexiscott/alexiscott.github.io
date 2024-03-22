@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="http://alexscott.net/feed_style.xsl" type="text/xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:base="http://purl.org/atompub/base/1.0/" xml:lang="es" xml:base="http:&#x2F;&#x2F;alexscott.net">
+    <str:translations xmlns:str="https://github.com/welpo/tabi">
+        <str:about_feeds>Esta es una fuente web, también conocida como fuente Atom. Suscríbete copiando la URL de la barra de direcciones en tu lector de noticias. Visita About Feeds para aprender más y empezar. Es gratis. </str:about_feeds>
+        <str:visit_the_site>Visita la web</str:visit_the_site>
+        <str:recent_posts>Publicaciones recientes</str:recent_posts>
+    </str:translations><title>Alex Scott - Inglés</title>
+        <subtitle>Blog de Alex</subtitle>
+    <link href="http://alexscott.net/es/tags/ingles/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="http://alexscott.net/es/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-22T00:00:00+00:00</updated>
+    <id>http://alexscott.net/es/tags/ingles/atom.xml</id><entry xml:lang="es">
+        <title>Chaucer y &quot;Encontrado in Translation&quot;</title>
+        <published>2024-03-22T00:00:00+00:00</published>
+        <updated>2024-03-22T00:00:00+00:00</updated>
+        <author>
+            <name>Alex Scott</name>
+        </author>
+        <link rel="alternate" href="http://alexscott.net/es/blog/chaucer/" type="text/html"/>
+        <id>http://alexscott.net/es/blog/chaucer/</id>
+        <summary type="html">La ortografía inglesa no ha sido siempre tan ilógico. La poesía de Geoffrey Chaucer nos vuelve a un tiempo en el que se podía prever la pronunciación de una palabra basada en su letra.</summary>
+        </entry>
+</feed>

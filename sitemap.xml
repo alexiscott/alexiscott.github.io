@@ -8,6 +8,10 @@
         <loc>http://alexscott.net/blog/</loc>
     </url>
     <url>
+        <loc>http://alexscott.net/blog/chaucer/</loc>
+        <lastmod>2024-03-22</lastmod>
+    </url>
+    <url>
         <loc>http://alexscott.net/blog/page/1/</loc>
     </url>
     <url>
@@ -21,6 +25,10 @@
         <loc>http://alexscott.net/es/blog/</loc>
     </url>
     <url>
+        <loc>http://alexscott.net/es/blog/chaucer/</loc>
+        <lastmod>2024-03-22</lastmod>
+    </url>
+    <url>
         <loc>http://alexscott.net/es/blog/page/1/</loc>
     </url>
     <url>
@@ -31,7 +39,16 @@
         <loc>http://alexscott.net/es/tags/</loc>
     </url>
     <url>
+        <loc>http://alexscott.net/es/tags/afi/</loc>
+    </url>
+    <url>
         <loc>http://alexscott.net/es/tags/haskell/</loc>
+    </url>
+    <url>
+        <loc>http://alexscott.net/es/tags/ingles/</loc>
+    </url>
+    <url>
+        <loc>http://alexscott.net/es/tags/poesia/</loc>
     </url>
     <url>
         <loc>http://alexscott.net/es/tags/recursion/</loc>
@@ -40,9 +57,21 @@
         <loc>http://alexscott.net/tags/</loc>
     </url>
     <url>
+        <loc>http://alexscott.net/tags/english/</loc>
+    </url>
+    <url>
         <loc>http://alexscott.net/tags/functional-programming/</loc>
     </url>
     <url>
         <loc>http://alexscott.net/tags/haskell/</loc>
+    </url>
+    <url>
+        <loc>http://alexscott.net/tags/ipa/</loc>
+    </url>
+    <url>
+        <loc>http://alexscott.net/tags/linguistics/</loc>
+    </url>
+    <url>
+        <loc>http://alexscott.net/tags/poetry/</loc>
     </url>
 </urlset>
