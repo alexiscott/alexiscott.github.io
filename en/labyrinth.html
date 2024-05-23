@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-05-24 Fri 00:14 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Theseus enters the labyrinth</title>
+<meta name="author" content="Alex Scott" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="/tufte.css" type="text/css" />
+<link rel="stylesheet" href="/ox-tufte.css" type="text/css" />
+</head>
+<body>
+<header id="preamble" class="status">
+<a href='/'>home</a>
+</header>
+<article id="content" class="content">
+<header>
+<h1 class="title">Theseus enters the labyrinth</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org87da0ab">1. On the never ending risk of failure</a></li>
+<li><a href="#org876a7b2">2. Why knowing how you get to where you are matters</a>
+<ul>
+<li><a href="#org9e94b9c">2.1. Backwards and forwards, forwards and back</a>
+<ul>
+<li><a href="#orgddb4b7c">2.1.1. What we are talking about is a stack</a></li>
+</ul>
+</li>
+<li><a href="#org3d6de01">2.2. So, how could Theseus enter the the Labrynth, kill the half man/ half bull, and come out unscathed, virtually.</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+Here we examine what we can learn about life (and code) by considering the ancient Greek myth of the Minotaur. We will write a simple maze game to see it in action. This is based on <a href="https://learnyouahaskell.com/">https://learnyouahaskell.com/</a> and the chapters about Monads, just that I'm applying it here to a different narrative. 
+</p>
+
+<section id="outline-container-org87da0ab" class="outline-2">
+<h2 id="org87da0ab"><span class="section-number-2">1.</span> On the never ending risk of failure</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+When Theseus enters the labyrinth to find and slay the Minotaur, it's unlikely that he's thinking: "What if I can't find the beast, maybe I'll hit a dead end?". Well, sorry, Theseus, but welcome to reality, this is life and things can and <i>do</i> go wrong.
+</p>
+
+<p>
+Let's say we have 3 possible routes, of which only 1 leads to our friend the Minotaur. Here we account for what Theseus might well have ignored.
+</p>
+
+<p>
+In this example maze, the Minotaur, AKA Mr. M, is hanging out at the end of <i>route B</i>, and not at the end of <i>routes A</i> or <i>routes C</i>! Trace the letters individually, starting with A, with the top left corner being the entry point.
+</p>
+
+<pre class="example" id="org924cf94">
+ABC AB AB AB A
+C          B
+C          B
+C          M
+C
+</pre>
+
+<p>
+Thinking of the maze as a numeric grid, we could say that at the end of route C is <i>21</i>, at the end of route A is <i>5</i>, and at the end of route B is yours truly, el <i>Minotaur</i> or <i>19</i>. 
+</p>
+
+<pre class="example" id="orgb1e7163">
+1  2  3  4  5
+6  7  8  9  10
+11 12 13 14 15
+16 17 18 19 20
+21 22 23 24 25
+</pre>
+
+
+<p>
+So there we have it, if Theseus steps on 21, or 5, he's messed up. However, if he manages to reach 19, he's picked the right route. How he actually kills the beast, your guess is as good as mine.
+</p>
+
+<p>
+So let's look at how we can represent this risk in code. Haskell includes this nifty thing called Maybe which can represent <i>messing up</i> in the form of <i>Nothing</i> or getting it right in the form of <i>Just</i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #006699;">isMember</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> [<span style="color: #6434A3;">Int</span>] <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Bool</span>
+<span style="color: #006699;">isMember</span> n <span style="color: #6434A3;">[]</span> <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">False</span>
+<span style="color: #006699;">isMember</span> n (x<span style="color: #6434A3;">:</span>xs)
+  <span style="color: #BA36A5;">|</span> n <span style="color: #BA36A5;">==</span> x <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">True</span>
+  <span style="color: #BA36A5;">|</span> otherwise <span style="color: #BA36A5;">=</span> isMember n xs
+
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Step</span> <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">badSteps</span> <span style="color: #BA36A5;">=</span> [5, 21]
+<span style="color: #006699;">winningStep</span> <span style="color: #BA36A5;">=</span> 19
+
+<span style="color: #006699;">takeStep</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Step</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Maybe</span> <span style="color: #6434A3;">Step</span>
+<span style="color: #006699;">takeStep</span> s 
+  <span style="color: #BA36A5;">|</span> isMember s badSteps   <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Nothing</span>
+  <span style="color: #BA36A5;">|</span> s <span style="color: #BA36A5;">==</span> winningStep  <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Just</span> s
+  <span style="color: #BA36A5;">|</span> otherwise <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Just</span> s
+</pre>
+</div>
+
+<p>
+Pretty simple. And to use it, well it works perfectly, in that we can navigate like this.
+</p>
+
+<p>
+Getting lost:
+</p>
+<pre class="example" id="org511804d">
+takeStep 1
+takeStep 2
+...
+takeStep 19 -- Found Minotaur!
+</pre>
+</div>
+</section>
+
+<section id="outline-container-org876a7b2" class="outline-2">
+<h2 id="org876a7b2"><span class="section-number-2">2.</span> Why knowing how you get to where you are matters</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+There is the rub.  You see we found the Minotaur, but Theseus has no way of getting out of the Labrynth. He doesn't have a record of the steps he took, that piece of string that was so important for him when it came to getting out again.
+</p>
+
+<p>
+Let's first see how we can track the steps that he takes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #006699;">isMember</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> [<span style="color: #6434A3;">Int</span>] <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Bool</span>
+<span style="color: #006699;">isMember</span> n <span style="color: #6434A3;">[]</span> <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">False</span>
+<span style="color: #006699;">isMember</span> n (x<span style="color: #6434A3;">:</span>xs)
+  <span style="color: #BA36A5;">|</span> n <span style="color: #BA36A5;">==</span> x <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">True</span>
+  <span style="color: #BA36A5;">|</span> otherwise <span style="color: #BA36A5;">=</span> isMember n xs
+
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Step</span> <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">StepsTaken</span> <span style="color: #BA36A5;">=</span> [<span style="color: #6434A3;">Int</span>]
+<span style="color: #006699;">badSteps</span> <span style="color: #BA36A5;">=</span> [5, 21]
+<span style="color: #006699;">winningStep</span> <span style="color: #BA36A5;">=</span> 19
+
+<span style="color: #006699;">takeStep</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Step</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">StepsTaken</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Maybe</span> <span style="color: #6434A3;">StepsTaken</span>
+<span style="color: #006699;">takeStep</span> s xs
+  <span style="color: #BA36A5;">|</span> isMember s badSteps   <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Nothing</span>
+  <span style="color: #BA36A5;">|</span> s <span style="color: #BA36A5;">==</span> winningStep  <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Just</span> (s <span style="color: #6434A3;">:</span> xs)
+  <span style="color: #BA36A5;">|</span> otherwise <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Just</span> (s <span style="color: #6434A3;">:</span> xs)
+</pre>
+</div>
+
+<p>
+And now we can chain the steps together: <code>takeStep 2 (takeStep 1 [ ])</code>, and at each step we build up his current state in an array of steps. But, for the second call
+we will get a Maybe value, or rather the code hasn't compiled. What can we do now?
+</p>
+
+<p>
+You can see that in this example:
+</p>
+
+<pre class="example" id="org02e0320">
+ghci&gt; takeStep 1 []
+Just [1]
+ghci&gt; takeStep 2 (takeStep 1 [])
+
+&lt;interactive&gt;:2:13: error:
+    • Couldn't match type: Maybe StepsTaken
+                     with: [Int]
+</pre>
+
+<p>
+What we want is a function that will accept a Maybe value. <i>takeStep</i> doesn't do that, but what the heck, we can raise it to those lofty heights with the bind operator,  <i>&gt;&gt;=</i> which has the type signature.
+</p>
+
+<pre class="example" id="orgdf557ef">
+t :: (m0 a0 -&gt; (a0 -&gt; m0 b0) -&gt; m0 b0) -&gt; [a]
+</pre>
+
+<p>
+From what I get in that we have a <i>Maybe</i> something getting passed to a function that takes a non <i>Maybe</i> value and outputs a <i>Maybe</i> value.
+</p>
+
+<p>
+And now we can chain together steps just as if we were walking the labyrinth ourselves!
+</p>
+
+<pre class="example" id="org3f5225f">
+ghci&gt; takeStep 1 [] &gt;&gt;= takeStep 2
+Just [2,1]
+</pre>
+
+<p>
+Here's a "dead end" example using the Maybe context and our bind operator. It is route A.
+</p>
+<pre class="example" id="orgf8d4247">
+λ&gt; takeStep 1 [] &gt;&gt;= takeStep 2 &gt;&gt;= takeStep 3 &gt;&gt;= takeStep 4 &gt;&gt;= takeStep 5 
+Nothing
+</pre>
+
+<p>
+And the route with the Minotaur at the end. Route B.
+</p>
+<pre class="example" id="org245becb">
+takeStep 1 [] &gt;&gt;= takeStep 2 &gt;&gt;= takeStep 3 &gt;&gt;= takeStep 4 &gt;&gt;= takeStep 9 &gt;&gt;= takeStep 14 &gt;&gt;= takeStep 19
+Just [19,14,9,4,3,2,1]
+</pre>
+</div>
+
+<div id="outline-container-org9e94b9c" class="outline-3">
+<h3 id="org9e94b9c"><span class="section-number-3">2.1.</span> Backwards and forwards, forwards and back</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+We have a complete representation of our route, but no way of going backwards and forwards as we go along. The metaphor that we are after is that of a stack.
+</p>
+</div>
+
+<div id="outline-container-orgddb4b7c" class="outline-4">
+<h4 id="orgddb4b7c"><span class="section-number-4">2.1.1.</span> What we are talking about is a stack</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+We could also call it a pile; something common for any of us who wash clothes, do the dishes, and now enter's labyrinth's with the objective of killing hybrid beings and want to get out again.
+</p>
+
+<p>
+At it's most basic a stack looks like this code here. We have a pop function that takes the first item in a list and returns it as it is, and then drops it from a list. And the push function that just joins the supplied integer onto the front of a list. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #0000FF;">import</span> <span style="color: #6434A3;">Control.Monad.State</span>
+
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Stack</span> <span style="color: #BA36A5;">=</span> [<span style="color: #6434A3;">Int</span>]
+
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>(x<span style="color: #6434A3;">:</span>xs) <span style="color: #BA36A5;">-&gt;</span> (x,xs)  
+
+<span style="color: #006699;">push</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">()</span>
+<span style="color: #006699;">push</span> a <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>xs <span style="color: #BA36A5;">-&gt;</span> (<span style="color: #6434A3;">()</span>,a<span style="color: #6434A3;">:</span>xs) 
+
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">=</span> <span style="color: #0000FF;">do</span>
+  push 0
+  push 10
+  push 10
+  a <span style="color: #BA36A5;">&lt;-</span> pop <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">Doing a pop like this means that we can use the /a/ value to do furter calculations.</span>
+  pop      <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">whereas here we just throw the value away.</span>
+  <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">pop</span>
+
+</pre>
+</div>
+<p>
+In this example:
+</p>
+<ul class="org-ul">
+<li>we start with our values <i>1,2,3</i>.</li>
+<li>Next we push 0 onto that, giving us: <i>0,1,2,3</i>.</li>
+<li>Now we push 10, and we have <i>10, 0,1,2,3</i>.</li>
+<li>Again we push 10, and we have <i>10, 10,0,1,2,3</i>.</li>
+<li>And now we remove a 10</li>
+<li>And another 10. This leaves our state as <i>0,1,2,3</i></li>
+<li>And the last pop was 10, which we add as the first expression in our pair.</li>
+</ul>
+
+
+<pre class="example" id="org74e6990">
+runState stackManip [1,2,3]
+(10,[0, 1,2,3])
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d6de01" class="outline-3">
+<h3 id="org3d6de01"><span class="section-number-3">2.2.</span> So, how could Theseus enter the the Labrynth, kill the half man/ half bull, and come out unscathed, virtually.</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+To be continued&#x2026;
+</p>
+</div>
+</div>
+</section>
+</article>
+<footer id="postamble" class="status">
+By Alex Scott on 2024-05-23 Thu 00:00
+</footer>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-05-24 Fri 00:14 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>La Torre de Hanoi</title>
+<meta name="author" content="Alex Scott" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="/tufte.css" type="text/css" />
+<link rel="stylesheet" href="/ox-tufte.css" type="text/css" />
+</head>
+<body>
+<header id="preamble" class="status">
+<a href='/'>home</a>
+</header>
+<article id="content" class="content">
+<header>
+<h1 class="title">La Torre de Hanoi</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org71c0a09">1. El desafío</a></li>
+<li><a href="#org4fbedb8">2. Un algoritmo</a></li>
+<li><a href="#orga55e137">3. El codigo</a></li>
+<li><a href="#org5553269">4. Casos bases</a></li>
+<li><a href="#org156d403">5. El caso recursivo</a>
+<ul>
+<li><a href="#org027a0ce">5.1. hanoi nMinusOne a c b</a></li>
+<li><a href="#org4721983">5.2. hanoi 1 a b c</a></li>
+<li><a href="#orga69b204">5.3. hanoi nMinusOne c b a</a></li>
+<li><a href="#orge63ea97">5.4. El resultado final</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+Las Torres de Hanói es un rompecabezas inventado en 1883 por el matemático francés Édouard Lucas en lo cual existe tres torres y queremos mudar <b>x</b> discos de uno a otro.
+</p>
+
+<section id="outline-container-org71c0a09" class="outline-2">
+<h2 id="org71c0a09"><span class="section-number-2">1.</span> El desafío</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Las [Torres de Hanói](<a href="https://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i">https://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i</a>) es un rompecabezas inventado en 1883 por el matemático francés Édouard Lucas en lo cual existe tres torres y queremos mudar <b>x</b> discos de uno a otro. Sin embargo:
+</p>
+
+<ul class="org-ul">
+<li>No podemos mover más que un disco a la vez.</li>
+<li>Un disco grande nunca puede cubrir uno más pequeño.</li>
+</ul>
+
+<p>
+El objetivo es producir un array de tuples que representa cada movimiento de cada disco.
+</p>
+</div>
+</section>
+
+
+<section id="outline-container-org4fbedb8" class="outline-2">
+<h2 id="org4fbedb8"><span class="section-number-2">2.</span> Un algoritmo</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Mover una pila de un disco o dos es bastante fácil. Con tres, empieza a complicarse la cosa.
+</p>
+
+<p>
+Trasladar una pila de 3
+</p>
+
+<p>
+[('a','b'),('a','c'),('b','c'),('a','b'),('c','a'),('c','b'),('a','b')]
+</p>
+
+<p>
+Trasladar una pila de 4
+</p>
+
+<p>
+[('a','c'),('a','b'),('c','b'),('a','c'),('b','a'),('b','c'),('a','c'),('a','b'),('c','b'),('c','a'),('b','a'),('c','b'),('a','c'),('a','b'),('c','b')]
+</p>
+
+<p>
+Existe un paradigma recursiva:
+</p>
+
+<ol class="org-ol">
+<li>Mover n - 1 discos desde <b>a</b> a <b>c</b></li>
+<li>Mover 1 disco de <b>a</b> a <b>b</b></li>
+<li>Mover n - 1 discos descde <b>c</b> a <b>b</b></li>
+</ol>
+</div>
+</section>
+
+
+<section id="outline-container-orga55e137" class="outline-2">
+<h2 id="orga55e137"><span class="section-number-2">3.</span> El codigo</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Podemos hacer la semántica más comprensiva utilizando <b>sinónimos de tipos</b>. Aunque creo que no nos aporta mucho aquí dado la falta de múltiples tipos de <b>Char</b>.
+</p>
+
+<p>
+type Tower = Char
+type Move = (Tower, Tower)
+</p>
+
+<p>
+Y con este <b>signature</b> hacemos una declaración de como funciona y de qué resultado tiene nuestra función <b>hanoi</b>.
+</p>
+
+<p>
+hanoi :: Integer -&gt; Tower -&gt; Tower -&gt; Tower -&gt; [Move]
+</p>
+</div>
+</section>
+
+
+<section id="outline-container-org5553269" class="outline-2">
+<h2 id="org5553269"><span class="section-number-2">4.</span> Casos bases</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Dos casos bases:
+</p>
+
+<p>
+hanoi 0 _ _ _ =  []
+hanoi 1 a b _ =  [(a, b)]
+</p>
+
+
+<p>
+&lt;a id="org3a4bc8c"&gt;&lt;/a&gt;
+</p>
+</div>
+</section>
+
+<section id="outline-container-org156d403" class="outline-2">
+<h2 id="org156d403"><span class="section-number-2">5.</span> El caso recursivo</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+hanoi n a b c =
+  let nMinusOne = (n - 1)
+    in
+    hanoi nMinusOne a c b <del>+ &#x2013; algoritmo cas0 1
+    hanoi 1 a b c +</del>         &#x2013; algoritmo cas0 2
+    hanoi nMinusOne c b a    &#x2013; algoritmo cas0 3
+</p>
+
+<p>
+Vamos a ver con un poco más detaille la correspondencia entre el algoritmo y las llamada del función. Empezamos con:
+</p>
+
+<p>
+hanoi 3 'a' 'b' 'c'
+</p>
+</div>
+
+
+<div id="outline-container-org027a0ce" class="outline-3">
+<h3 id="org027a0ce"><span class="section-number-3">5.1.</span> hanoi nMinusOne a c b</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>No produce valores en la primera instancia - como no hay case base todavía. <b>nMinusOne</b> es 2.</li>
+</ul>
+
+<p>
+Pero con la primera recursion, `hanoi 2 'a' 'c' 'b'`, se empieza a producir resultados:
+</p>
+
+<ul class="org-ul">
+<li>Se nota que ha cambiado el orden de las torres.</li>
+<li>Y <b>nMinusOne</b> siendo ahora 1, salen estos valores:</li>
+
+<li>`hanoi 1 a c b` produce [('a', 'b')]</li>
+<li>`hanoi 1 a b c` produce [('a', 'c')]</li>
+<li>`hanoi 1 c b a` produce [('b', 'c')]</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org4721983" class="outline-3">
+<h3 id="org4721983"><span class="section-number-3">5.2.</span> hanoi 1 a b c</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Aquí no hay recursión. Toda pasa dentro de la misma llamada.
+</p>
+
+<ol class="org-ol">
+<li>`hanoi 1 a b c ++` produce [('a', 'b']</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orga69b204" class="outline-3">
+<h3 id="orga69b204"><span class="section-number-3">5.3.</span> hanoi nMinusOne c b a</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Volvemos a recurrir con <b>n</b> = <b>2</b>. <b>nMinusOne</b> tiene su ámbito léxico establecido en la llamada inicial y siempre va ser 2.
+</p>
+
+<p>
+The  argumentos ahora son:  'c' 'b' 'a'.
+</p>
+
+<ol class="org-ol">
+<li>`hanoi 1 a c b` produce [('c', 'a')]</li>
+<li>`hanoi 1 a b c` produce [('c', 'b')]</li>
+<li>`hanoi 1 c b a` produce [('a', 'b')]</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orge63ea97" class="outline-3">
+<h3 id="orge63ea97"><span class="section-number-3">5.4.</span> El resultado final</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Utilizando <b>++</b> se ha concatenado los resultados de cada una de las tres llamadas en la función <b>hanoi</b>.
+</p>
+
+<p>
+λ&gt; `hanoi 3 'a' 'b' 'c'`
+</p>
+
+<p>
+`[('a','b'),('a','c'),('b','c'),('a','b'),('c','a'),('c','b'),('a','b')]`
+</p>
+
+<p>
+Podriamos aplicar `hanoi 4 'a' 'b' 'c'`, or `hanoi 5 'a' 'b' 'c'` etc.
+</p>
+</div>
+</div>
+</section>
+</article>
+<footer id="postamble" class="status">
+By Alex Scott on 2024-03-08 Fri 00:00
+</footer>
+</body>
+</html>

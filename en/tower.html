@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-05-24 Fri 00:14 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>"The Tower of Hanoi"</title>
+<meta name="author" content="Alex Scott" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="/tufte.css" type="text/css" />
+<link rel="stylesheet" href="/ox-tufte.css" type="text/css" />
+</head>
+<body>
+<header id="preamble" class="status">
+<a href='/'>home</a>
+</header>
+<article id="content" class="content">
+<header>
+<h1 class="title">"The Tower of Hanoi"</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2764151">1. The problem</a></li>
+<li><a href="#org6bfaf84">2. An algorithm to solve the puzzle</a></li>
+<li><a href="#org61cf062">3. Starting to code</a></li>
+<li><a href="#orga41a77e">4. Base case/s</a></li>
+<li><a href="#orgb751dbc">5. Recursive cases</a>
+<ul>
+<li><a href="#orgd8eac6c">5.1. hanoi nMinusOne a c b</a></li>
+<li><a href="#org0f8233c">5.2. hanoi 1 a b c</a></li>
+<li><a href="#orga75a9e8">5.3. hanoi nMinusOne c b a</a></li>
+<li><a href="#org7225099">5.4. And our final result</a></li>
+</ul>
+</li>
+<li><a href="#orgfcfb1a1">6. References</a></li>
+</ul>
+</div>
+</nav>
+<p>
+The Tower of Hanoi is the name of a puzzle invented by the french mathematician Édouard Lucas in 1883. We will solve it in code and using recursion.
+</p>
+
+<section id="outline-container-org2764151" class="outline-2">
+<h2 id="org2764151"><span class="section-number-2">1.</span> The problem</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Tower of Hanoi</a>, is the name of a puzzle invented by the french mathematician Édouard Lucas in 1883. We will solve it in code and using recursion.
+</p>
+
+<p>
+It's played like this: imagine we have three towers and want to move a pile of discs stacked from top to bottom smallest to largest, from one tower to another. The catch is that:
+</p>
+
+<ul class="org-ul">
+<li>We can only move one disc at a time.</li>
+<li>A larger disc can not cover a smaller disc.</li>
+</ul>
+
+<p>
+We want to represent our solution in code by outputting an array of tupples of each of the moves that we make.
+</p>
+</div>
+</section>
+
+
+<section id="outline-container-org6bfaf84" class="outline-2">
+<h2 id="org6bfaf84"><span class="section-number-2">2.</span> An algorithm to solve the puzzle</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Moving a pile of just one or two discs is straight forward. However, we observe that moving 3 or more discs requires a lot of moves and is not a random affair.
+</p>
+
+<p>
+Moving 3 discs:
+</p>
+
+<pre class="example" id="orgd81a0eb">
+[('a','b'),('a','c'),('b','c'),('a','b'),('c','a'),('c','b'),('a','b')]
+</pre>
+
+<p>
+And 4 discs is still more involved:
+</p>
+
+<pre class="example" id="orgd6dfc96">
+[('a','c'),('a','b'),('c','b'),('a','c'),('b','a'),('b','c'),('a','c'),('a','b'),('c','b'),('c','a'),('b','a'),('c','b'),('a','c'),('a','b'),('c','b')]
+</pre>
+
+<p>
+Yet, there is a pattern, and it's mostly recursive. We will use this algorithm:
+</p>
+
+<ol class="org-ol">
+<li>Move <b>n - 1</b> discs from a to c</li>
+<li>Move <b>1</b> disc for a to b</li>
+<li>Move <b>n</b> - 1 discs from c to b</li>
+</ol>
+</div>
+</section>
+
+
+<section id="outline-container-org61cf062" class="outline-2">
+<h2 id="org61cf062"><span class="section-number-2">3.</span> Starting to code</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The word <b>Tower</b> adds semantic meaning. Perhaps most useful where we have multiple uses of <b>Char</b> for different types of things, which is actually not the case here.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Tower</span> <span style="color: #BA36A5;">=</span> <span style="color: #6434A3;">Char</span>
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Move</span> <span style="color: #BA36A5;">=</span> (<span style="color: #6434A3;">Tower</span>, <span style="color: #6434A3;">Tower</span>)
+</pre>
+</div>
+
+<p>
+Having a type signature makes it very clear what data we take in and what we produce, and is generally very helpful.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #006699;">hanoi</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Integer</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Tower</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Tower</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">Tower</span> <span style="color: #BA36A5;">-&gt;</span> [<span style="color: #6434A3;">Move</span>]
+</pre>
+</div>
+</div>
+</section>
+
+
+<section id="outline-container-orga41a77e" class="outline-2">
+<h2 id="orga41a77e"><span class="section-number-2">4.</span> Base case/s</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+We always use <b>base cases</b> to end the recursion. And here we return not just a data structure but some values as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #006699;">hanoi</span> 0 <span style="color: #0000FF;">_</span> <span style="color: #0000FF;">_</span> <span style="color: #0000FF;">_</span> <span style="color: #BA36A5;">=</span>  <span style="color: #6434A3;">[]</span>
+<span style="color: #006699;">hanoi</span> 1 a b <span style="color: #0000FF;">_</span> <span style="color: #BA36A5;">=</span>  [(a, b)]
+</pre>
+</div>
+</div>
+</section>
+
+
+<section id="outline-container-orgb751dbc" class="outline-2">
+<h2 id="orgb751dbc"><span class="section-number-2">5.</span> Recursive cases</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+As per our algorithm, we have three different types of call. The first is recursive. The second just calls the base case directly and the third is again recursive.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #006699;">hanoi</span> n a b c <span style="color: #BA36A5;">=</span>
+    <span style="color: #0000FF;">let</span> nMinusOne <span style="color: #BA36A5;">=</span> (n <span style="color: #BA36A5;">-</span> 1)
+      <span style="color: #0000FF;">in</span>
+      hanoi nMinusOne a c b <span style="color: #BA36A5;">++</span> <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">algorithm case 1</span>
+      hanoi 1 a b c <span style="color: #BA36A5;">++</span>         <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">algorithm case 2</span>
+      hanoi nMinusOne c b a    <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">algorithm case 3</span>
+</pre>
+</div>
+
+<p>
+Let's look inside each of the calls. Starting with a function call having 3 discs.
+</p>
+
+<pre class="example" id="org127c440">
+hanoi 3 'a' 'b' 'c'
+</pre>
+</div>
+
+
+<div id="outline-container-orgd8eac6c" class="outline-3">
+<h3 id="orgd8eac6c"><span class="section-number-3">5.1.</span> hanoi nMinusOne a c b</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>We don't return any values for the first recursion but we <b>do</b> set <b>nMinusOne</b> to 2.</li>
+</ul>
+
+<p>
+With <code>hanoi 2 'a' 'c' 'b'</code>
+</p>
+
+<ul class="org-ul">
+<li>We have changed the order of our arguments/ towers.</li>
+<li><p>
+We set nMinusOne to 1. Now we can a producing values using our base case, like so:
+</p>
+
+<p>
+<code>hanoi 1 a c b</code> produces <code>[('a', 'b')]</code>
+<code>hanoi 1 a b c</code> produces <code>[('a', 'c')]</code>
+<code>hanoi 1 c b a</code> produces <code>[('b', 'c')]</code>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0f8233c" class="outline-3">
+<h3 id="org0f8233c"><span class="section-number-3">5.2.</span> hanoi 1 a b c</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Note that this happens within the same function call, so here there is no recursion. It's just a base case returning values.
+</p>
+
+<ol class="org-ol">
+<li><code>hanoi 1 a b c ++</code> produces [('a', 'b']</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orga75a9e8" class="outline-3">
+<h3 id="orga75a9e8"><span class="section-number-3">5.3.</span> hanoi nMinusOne c b a</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Now we recur again with <b>n</b> still being <b>2</b>. I think that is because <b>nMinusOne</b> is <b>lexically scoped</b> at the a, so it will always be 2 however many discs we might  have.
+</p>
+
+<p>
+The  arguments now are:  'c' 'b' 'a'.
+</p>
+
+<ol class="org-ol">
+<li><code>hanoi 1 a c b</code> produces [('c', 'a')]</li>
+<li><code>hanoi 1 a b c</code> produces [('c', 'b')]</li>
+<li><code>hanoi 1 c b a</code> produces [('a', 'b')]</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org7225099" class="outline-3">
+<h3 id="org7225099"><span class="section-number-3">5.4.</span> And our final result</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Our final result is the concatenation, using <b>++</b> of each of the arrays that we produced from our three calls.
+</p>
+
+<p>
+λ&gt; <code>hanoi 3 'a' 'b' 'c'</code>
+</p>
+
+
+<p>
+<code>[('a','b'),('a','c'),('b','c'),('a','b'),('c','a'),('c','b'),('a','b')]</code>
+</p>
+
+<p>
+Of course, we could also call `hanoi 4 'a' 'b' 'c'`, or `hanoi 5 'a' 'b' 'c'` etc.
+</p>
+</div>
+</div>
+</section>
+
+<section id="outline-container-orgfcfb1a1" class="outline-2">
+<h2 id="orgfcfb1a1"><span class="section-number-2">6.</span> References</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+I was looking at:
+</p>
+
+<p>
+<a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/resources/lecture-6-recursion-and-dictionaries/">https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/resources/lecture-6-recursion-and-dictionaries/</a> and <a href="https://enocom.dev/blog/solving-the-towers-of-hanoi-with-haskell">https://enocom.dev/blog/solving-the-towers-of-hanoi-with-haskell</a>
+</p>
+</div>
+</section>
+</article>
+<footer id="postamble" class="status">
+By Alex Scott on 2024-03-17 Sun 00:00
+</footer>
+</body>
+</html>
