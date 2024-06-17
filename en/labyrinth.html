@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-06-14 Fri 18:29 -->
+<!-- 2024-06-17 Mon 19:30 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Theseus enters the labyrinth</title>
@@ -225,23 +225,23 @@ At it's most basic a stack looks like this code here. We have a pop function tha
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">  <span style="color: #0000FF;">import</span> <span style="color: #6434A3;">Control.Monad.State</span>
+<pre class="src src-haskell"><span style="color: #0000FF;">import</span> <span style="color: #6434A3;">Control.Monad.State</span>
 
-  <span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Stack</span> <span style="color: #BA36A5;">=</span> [<span style="color: #6434A3;">Int</span>]
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Stack</span> <span style="color: #BA36A5;">=</span> [<span style="color: #6434A3;">Int</span>]
 
-  pop <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
-  pop <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>(x<span style="color: #6434A3;">:</span>xs) <span style="color: #BA36A5;">-&gt;</span> (x,xs)  
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>(x<span style="color: #6434A3;">:</span>xs) <span style="color: #BA36A5;">-&gt;</span> (x,xs)  
 
-  push <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">()</span>
-  push a <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>xs <span style="color: #BA36A5;">-&gt;</span> (<span style="color: #6434A3;">()</span>,a<span style="color: #6434A3;">:</span>xs) 
+<span style="color: #006699;">push</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">()</span>
+<span style="color: #006699;">push</span> a <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>xs <span style="color: #BA36A5;">-&gt;</span> (<span style="color: #6434A3;">()</span>,a<span style="color: #6434A3;">:</span>xs) 
 
-  stackManip <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
-  stackManip <span style="color: #BA36A5;">=</span> <span style="color: #0000FF;">do</span>
-    push 0
-    push 10
-    push 10
-    a <span style="color: #BA36A5;">&lt;-</span> pop <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">Doing a pop like this means that we can use the /a/ value to do furter calculations.</span>
-    pop      <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">whereas here we just throw the value away.</span>
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">=</span> <span style="color: #0000FF;">do</span>
+  push 0
+  push 10
+  push 10
+  a <span style="color: #BA36A5;">&lt;-</span> pop <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">Doing a pop like this means that we can use the /a/ value to do furter calculations.</span>
+  pop      <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">whereas here we just throw the value away.</span>
     <span style="color: #8D8D84;">-- </span><span style="color: #8D8D84; font-style: italic;">pop</span>
 
 </pre>
@@ -271,11 +271,47 @@ What we see then is an easy way to think about going backwards and forwards.
 </p>
 
 <p>
-Now, how could Theseus enter the the Labrynth, kill the half man/ half bull, and come out unscathed, virtually.
+Now, how could Theseus enter the the Labrynth, kill the half man/ half bull, and come out unscathed, virtually?
 </p>
 
 <p>
-To be continued&#x2026;
+Well we want to run route B, like before, where we had <i>Just [19,14,9,4,3,2,1]</i>, and then we want to pop our way back to 1.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #0000FF;">import</span> <span style="color: #6434A3;">Control.Monad.State</span>
+
+<span style="color: #0000FF;">type</span> <span style="color: #6434A3;">Stack</span> <span style="color: #BA36A5;">=</span> [<span style="color: #6434A3;">Int</span>]
+
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">pop</span> <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>(x<span style="color: #6434A3;">:</span>xs) <span style="color: #BA36A5;">-&gt;</span> (x,xs)  
+
+<span style="color: #006699;">push</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">Int</span> <span style="color: #BA36A5;">-&gt;</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">()</span>
+<span style="color: #006699;">push</span> a <span style="color: #BA36A5;">=</span> state <span style="color: #BA36A5;">$</span> <span style="color: #BA36A5;">\</span>xs <span style="color: #BA36A5;">-&gt;</span> (<span style="color: #6434A3;">()</span>,a<span style="color: #6434A3;">:</span>xs) 
+
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">::</span> <span style="color: #6434A3;">State</span> <span style="color: #6434A3;">Stack</span> <span style="color: #6434A3;">Int</span>
+<span style="color: #006699;">stackManip</span> <span style="color: #BA36A5;">=</span> <span style="color: #0000FF;">do</span>
+  push 1
+  push 2
+  push 3
+  push 4
+  push 9
+  push 14
+  push 19
+  pop
+  pop
+  pop
+  pop
+  pop
+  pop
+ 
+
+
+</pre>
+</div>
+
+<p>
+The next step will be to make this visually appealing, and to add interaction. I will add a link here, once ready.
 </p>
 </div>
 </div>
